@@ -3,6 +3,7 @@ from aiogram.types import Message
 from aiogram.fsm.storage.memory import MemoryStorage
 
 from handlers import router as main_router
+from keyboards.reply import START_SHIFT
 
 from core.load import get_bot
 from core.config import settings
@@ -28,11 +29,16 @@ async def cmd_start(message: Message):
     tg_id = message.from_user.id
 
     msg = f"Assalomu alaykum, {name}.\n" "Botimizga xush kelibsiz!\n"
+    markup = START_SHIFT
     admin = token == settings.admin.token
-    if admin:
-        msg += "✅ Siz admin sifatida ro'yhatdan o'tdingiz."
 
     async with db_helper.session_factory() as session:
-        await UserCRUD.set_user(session, name, tg_id, admin)
+        user = await UserCRUD.set_user(session, name, tg_id, admin)
 
-    await message.answer(msg)
+    if user.role == "admin":
+        # TODO: add markup for admin
+        markup = None
+
+        msg += "✅ Siz botda admin sifatida ro'yhatdan o'tganiz."
+
+    await message.answer(msg, reply_markup=markup)

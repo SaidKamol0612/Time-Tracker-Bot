@@ -9,7 +9,7 @@ class UserCRUD:
     @staticmethod
     async def set_user(
         session: AsyncSession, username: str, tg_id: int, is_admin: bool = False
-    ):
+    ) -> User:
         stmt = select(User).where(User.tg_id == tg_id)
         user = await session.scalar(stmt) or None
 
@@ -27,6 +27,7 @@ class UserCRUD:
 
         await session.commit()
         await session.refresh(user)
+        return user
 
     @staticmethod
     async def get_user_by_tg_id(session: AsyncSession, tg_id: int) -> User | None:
