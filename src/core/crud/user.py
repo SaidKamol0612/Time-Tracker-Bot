@@ -18,6 +18,7 @@ class UserCRUD:
         role = UserRoles.ADMIN if is_admin else UserRoles.WORKER
         if user:
             user.username = username
+            role = UserRoles.ADMIN if is_admin else UserRoles.WORKER
         else:
             user = User(
                 tg_id=tg_id,
