@@ -16,11 +16,23 @@ from keyboards.reply import (
     get_worktypes_kb,
     WORKTYPES,
     WORKER_MENU,
+    MY_INFO_TXT,
 )
 from states.worker_states import WorkerStates
 from utils import determine_shift_type
 
 router = Router()
+
+
+@router.message(F.text == MY_INFO_TXT)
+async def my_info(message: Message):
+    async with db_helper.session_factory() as session:
+        curr = await UserCRUD.get_user_by_tg_id(session, message.from_user.id)
+        salary = await SalaryCRUD.get_salary(session, curr.id)
+    total = salary.total if salary else 0
+    msg = f"👤 <b>Username:</b> {curr.username}\n" f"💸 <b>Oylik:</b> {total}"
+
+    await message.answer(msg)
 
 
 @router.message(F.text == START_SHIFT_TXT)
@@ -160,5 +172,8 @@ async def cancel_ending(message: Message, state: FSMContext):
 
     await message.answer(
         "✅ Ishni tugatish bekor qilindi.",
-        reply_markup=working_menu(is_chef=data.get("is_chef", False), is_night=data.get("shift_type") == "night"),
+        reply_markup=working_menu(
+            is_chef=data.get("is_chef", False),
+            is_night=data.get("shift_type") == "night",
+        ),
     )

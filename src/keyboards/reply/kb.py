@@ -4,11 +4,12 @@ from aiogram.utils.keyboard import ReplyKeyboardBuilder
 REMOVER = ReplyKeyboardRemove()
 
 START_SHIFT_TXT = "▶️ Ishni boshlash"
+MY_INFO_TXT = "🗃️ Mening ma'lumotlarim"
 
 WORKER_MENU = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton(text=START_SHIFT_TXT)],
-        [KeyboardButton(text="📊 Hisobotni ko‘rish")],
+        [KeyboardButton(text=MY_INFO_TXT)],
     ],
     resize_keyboard=True,
 )

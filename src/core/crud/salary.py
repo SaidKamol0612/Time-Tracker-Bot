@@ -21,3 +21,10 @@ class SalaryCRUD:
 
         await session.commit()
         await session.refresh(salary)
+
+    @staticmethod
+    async def get_salary(session: AsyncSession, user_id: int):
+        stmt = select(Salary).where(Salary.user_id == user_id)
+        salary = await session.scalar(stmt)
+
+        return salary or None

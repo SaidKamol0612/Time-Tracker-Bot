@@ -5,6 +5,7 @@ __all__ = (
     "working_menu",
     "WORKTYPES",
     "get_worktypes_kb",
+    "MY_INFO_TXT",
 )
 
 from .kb import (
@@ -14,4 +15,5 @@ from .kb import (
     working_menu,
     WORKTYPES,
     get_worktypes_kb,
+    MY_INFO_TXT,
 )
