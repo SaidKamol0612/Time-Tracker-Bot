@@ -23,8 +23,26 @@ class SalaryCRUD:
         await session.refresh(salary)
 
     @staticmethod
-    async def get_salary(session: AsyncSession, user_id: int):
+    async def get_or_create_salary(session: AsyncSession, user_id: int):
         stmt = select(Salary).where(Salary.user_id == user_id)
         salary = await session.scalar(stmt)
 
-        return salary or None
+        if not salary:
+            salary = Salary(user_id=user_id)
+            session.add(salary)
+            await session.commit()
+            await session.refresh(salary)
+
+        return salary
+
+    @staticmethod
+    async def set_null(session: AsyncSession, user_id: int) -> bool:
+        stmt = select(Salary).where(Salary.user_id == user_id)
+        salary = await session.scalar(stmt)
+
+        if salary:
+            salary.total = 0
+            await session.commit()
+            await session.refresh(salary)
+
+        return True

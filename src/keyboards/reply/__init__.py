@@ -6,9 +6,13 @@ __all__ = (
     "WORKTYPES",
     "get_worktypes_kb",
     "MY_INFO_TXT",
+    "ADMIN_MENU",
+    "FULL_OVERVIEW_TXT",
+    "PAY_SALARY_TXT",
+    "show_workers_kb",
 )
 
-from .kb import (
+from .worker_kb import (
     WORKER_MENU,
     START_SHIFT_TXT,
     END_SHIFT_TXT,
@@ -16,4 +20,11 @@ from .kb import (
     WORKTYPES,
     get_worktypes_kb,
     MY_INFO_TXT,
+)
+
+from .admin_kb import (
+    ADMIN_MENU,
+    FULL_OVERVIEW_TXT,
+    PAY_SALARY_TXT,
+    show_workers_kb,
 )

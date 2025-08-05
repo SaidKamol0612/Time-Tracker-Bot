@@ -4,6 +4,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from core.db.models import User
 from core.enums import UserRoles
 
+from .salary import SalaryCRUD
+
 
 class UserCRUD:
     @staticmethod
@@ -27,6 +29,7 @@ class UserCRUD:
 
         await session.commit()
         await session.refresh(user)
+        await SalaryCRUD.add_to_salary(session, user.id, 0)
         return user
 
     @staticmethod
@@ -34,3 +37,10 @@ class UserCRUD:
         stmt = select(User).where(User.tg_id == tg_id)
         res = await session.scalar(stmt)
         return res or None
+
+    @staticmethod
+    async def get_workers(session: AsyncSession) -> list[User]:
+        stmt = select(User).where(User.role == UserRoles.WORKER)
+        res = await session.scalars(stmt)
+
+        return [user for user in res]

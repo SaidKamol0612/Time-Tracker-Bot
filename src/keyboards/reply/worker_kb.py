@@ -1,7 +1,6 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
-REMOVER = ReplyKeyboardRemove()
 
 START_SHIFT_TXT = "▶️ Ishni boshlash"
 MY_INFO_TXT = "🗃️ Mening ma'lumotlarim"

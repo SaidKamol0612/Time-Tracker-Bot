@@ -1,4 +1,8 @@
-__all__ = ("UserCRUD",)
+__all__ = (
+    "UserCRUD",
+    "SalaryCRUD",
+)
+
 
 from .user import UserCRUD
 from .salary import SalaryCRUD

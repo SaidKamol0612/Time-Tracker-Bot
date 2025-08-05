@@ -28,7 +28,7 @@ router = Router()
 async def my_info(message: Message):
     async with db_helper.session_factory() as session:
         curr = await UserCRUD.get_user_by_tg_id(session, message.from_user.id)
-        salary = await SalaryCRUD.get_salary(session, curr.id)
+        salary = await SalaryCRUD.get_or_create_salary(session, curr.id)
     total = salary.total if salary else 0
     msg = f"👤 <b>Username:</b> {curr.username}\n" f"💸 <b>Oylik:</b> {total}"
 

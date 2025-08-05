@@ -3,7 +3,7 @@ from aiogram.types import Message
 from aiogram.fsm.storage.memory import MemoryStorage
 
 from handlers import router as main_router
-from keyboards.reply import WORKER_MENU
+from keyboards.reply import WORKER_MENU, ADMIN_MENU
 
 from core.load import get_bot
 from core.config import settings
@@ -14,7 +14,7 @@ dp = Dispatcher(storage=MemoryStorage())
 
 
 async def start_bot() -> None:
-    bot = get_bot()
+    bot = await get_bot()
 
     dp.include_router(main_router)
 
@@ -36,8 +36,7 @@ async def cmd_start(message: Message):
         user = await UserCRUD.set_user(session, name, tg_id, admin)
 
     if user.role == "admin":
-        # TODO: add markup for admin
-        markup = None
+        markup = ADMIN_MENU
 
         msg += "✅ Siz botda admin sifatida ro'yhatdan o'tganiz."
 
