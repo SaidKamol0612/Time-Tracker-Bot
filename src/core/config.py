@@ -42,6 +42,10 @@ class LoggingConfig(BaseModel):
         return logging.getLevelNamesMapping()[self.log_level.upper()]
 
 
+class AdminSettings(BaseModel):
+    token: str
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=ENV_PATH,
@@ -53,6 +57,7 @@ class Settings(BaseSettings):
     bot: BotSettings
     db: DataBaseSettings
     logging: LoggingConfig = LoggingConfig()
+    admin: AdminSettings
 
 
 settings = Settings()

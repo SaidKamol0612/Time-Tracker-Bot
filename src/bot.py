@@ -6,6 +6,7 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from handlers import main_router
 
 from core.load import get_bot
+from core.config import settings
 
 dp = Dispatcher(storage=MemoryStorage())
 
@@ -18,10 +19,14 @@ async def start_bot() -> None:
     await dp.start_polling(bot)
 
 
-@dp.message(CommandStart())
+@dp.message(F.text.startswith("/start"))
 async def cmd_start(message: Message):
-    user = message.from_user
+    args = message.text.split()
+    token = args[1] if len(args) > 1 else ""
+    name = message.from_user.first_name
 
-    start_msg = f"Assalomu alaykum @{user.username}!\n"
-
-    await message.answer(text=start_msg)
+    msg = f"Assalomu alaykum, {name}.\n" "Botimizga xush kelibsiz!\n"
+    if token == settings.admin.token:
+        # TODO: write logic to adding admin to db
+        msg += "✅ Siz admin sifatida ro'yhatdan o'tdingiz."
+    await message.answer(msg)
