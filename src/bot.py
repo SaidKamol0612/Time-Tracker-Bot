@@ -2,7 +2,7 @@ from aiogram import Dispatcher, F
 from aiogram.types import Message
 from aiogram.fsm.storage.memory import MemoryStorage
 
-from handlers import main_router
+from handlers import router as main_router
 
 from core.load import get_bot
 from core.config import settings

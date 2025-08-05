@@ -1,14 +1,9 @@
-from enum import StrEnum as PyEnum
-
 from sqlalchemy import BigInteger, String, Enum
 from sqlalchemy.orm import Mapped, mapped_column
 
+from core.enums import UserRoles
+
 from .base import Base
-
-
-class UserRoles(PyEnum):
-    ADMIN = "admin"
-    WORKER = "worker"
 
 
 class User(Base):

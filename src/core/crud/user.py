@@ -1,7 +1,8 @@
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from core.db.models import User, UserRoles
+from core.db.models import User
+from core.enums import UserRoles
 
 
 class UserCRUD:
@@ -12,7 +13,7 @@ class UserCRUD:
         stmt = select(User).where(User.tg_id == tg_id)
         user = await session.scalar(stmt) or None
 
-        role=UserRoles.ADMIN if is_admin else UserRoles.WORKER
+        role = UserRoles.ADMIN if is_admin else UserRoles.WORKER
         if user:
             user.username = username
         else:
