@@ -3,7 +3,7 @@ from aiogram.types import Message
 from aiogram.fsm.storage.memory import MemoryStorage
 
 from handlers import router as main_router
-from keyboards.reply import START_SHIFT
+from keyboards.reply import WORKER_MENU
 
 from core.load import get_bot
 from core.config import settings
@@ -29,7 +29,7 @@ async def cmd_start(message: Message):
     tg_id = message.from_user.id
 
     msg = f"Assalomu alaykum, {name}.\n" "Botimizga xush kelibsiz!\n"
-    markup = START_SHIFT
+    markup = WORKER_MENU
     admin = token == settings.admin.token
 
     async with db_helper.session_factory() as session:

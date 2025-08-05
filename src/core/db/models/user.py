@@ -1,9 +1,14 @@
+from typing import TYPE_CHECKING
+
 from sqlalchemy import BigInteger, String, Enum
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from core.enums import UserRoles
 
 from .base import Base
+
+if TYPE_CHECKING:
+    from .salary import Salary
 
 
 class User(Base):
@@ -18,3 +23,5 @@ class User(Base):
         ),
         default=UserRoles.WORKER,
     )
+
+    salary: Mapped["Salary"] = relationship(back_populates="user", uselist=False)
