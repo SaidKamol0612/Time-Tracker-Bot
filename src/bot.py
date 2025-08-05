@@ -33,9 +33,9 @@ async def cmd_start(message: Message):
     admin = token == settings.admin.token
 
     async with db_helper.session_factory() as session:
-        user = await UserCRUD.set_user(session, name, tg_id, admin)
+        await UserCRUD.set_user(session, name, tg_id, admin)
 
-    if user.role == "admin":
+    if admin:
         markup = ADMIN_MENU
 
         msg += "✅ Siz botda admin sifatida ro'yhatdan o'tganiz."
